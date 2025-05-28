@@ -16,3 +16,36 @@
   flex-wrap: wrap;
   align-items: flex-start;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 1rem 0;
+  gap: 0.5rem;
+}
+
+.pagination li {
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  background-color: #222;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.pagination li:hover {
+  background-color: #444;
+}
+
+.pagination .active {
+  background-color: white;
+  color: #222;
+  border: 1px solid #222;
+  font-weight: bold;
+}
+
+.pagination .disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

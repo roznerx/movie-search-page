@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Searchbar from "./components/Searchbar";
 import { getMovies } from "./api/movies";
 import Movie from "./components/Movie";
+import ReactPaginate from 'react-paginate';
 import "./MovieSearchPage.css";
 
 export default function MovieSearchPage() {
@@ -19,13 +20,18 @@ export default function MovieSearchPage() {
         const data = await getMovies(searchInput, page);
         setMovieData(data);
         setMovies(data.results);
+        setTotalPages(data.total_pages);
       } catch (error) {
-        console.error('Failed to fetch movies:', err.message);
+        console.error('Failed to fetch movies:', error.message);
       }
     };
 
     fetchMovies();
   }, [searchInput, page]);
+
+  useEffect(() => {
+    setPages(1);
+  }, [searchInput]);
 
   console.log(movieData)
   console.log("Movies found:", movies);
@@ -53,6 +59,25 @@ export default function MovieSearchPage() {
           }) : searchInput && <p>No results found.</p>
         }
       </div>
+      {
+        totalPages > 1 && (
+          <ReactPaginate
+            previousLabel={"←"}
+            nextLabel={"→"}
+            breakLabel={"..."}
+            pageCount={totalPages}
+            marginPagesDisplayed={1}
+            pageRangeDisplayed={2}
+            onPageChange={({ selected }) => setPages(selected + 1)} 
+            forcePage={page - 1} 
+            containerClassName={"pagination"}
+            activeClassName={"active"}
+            previousClassName={"page-arrow"}
+            nextClassName={"page-arrow"}
+            disabledClassName={"disabled"}
+          />
+        )
+      }
     </div>
   );
 };
