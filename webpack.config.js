@@ -26,11 +26,15 @@ module.exports = {
         exclude: /node_modules/,
         use: ["babel-loader"],
       },
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
     ],
   },
   // pass all js files through Babel
   resolve: {
-    extensions: ["*", ".js", ".jsx"],
+    extensions: ['', '.js', '.jsx', '.css'],
   },
   plugins: [
     new HtmlWebpackPlugin({

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Searchbar from "./components/Searchbar";
 import { getMovies } from "./api/movies";
+import Movie from "./components/Movie";
+import "./MovieSearchPage.css";
 
 export default function MovieSearchPage() {
   const [searchInput, setSearchInput] = useState("");
@@ -25,27 +27,31 @@ export default function MovieSearchPage() {
     fetchMovies();
   }, [searchInput, page]);
 
-  console.log("Search input:", searchInput);
-  console.log("Movies found:", movieData);
+  console.log(movieData)
+  console.log("Movies found:", movies);
 
   return (
     <div>
       <div className="header">
         <h1>Movie Search Page</h1>
-      </div>
-      <div className="searchbar">
         <Searchbar setSearchInput={setSearchInput} />
       </div>
       <div className="movies">
-        {movieData.results && movies.length > 0 ? (
-          <ul>
-            {movies.map((movie) => (
-              <li key={movie.id}>{movie.title}</li>
-            ))}
-          </ul>
-        ) : (
-          searchInput && <p>No results found.</p>
-        )}
+        {
+          movieData.results && movies.length > 0 ? 
+          movies.map(m => {
+            return (
+              <Movie 
+                key={m.id}
+                title={m.title}
+                plot={m.overview}
+                popularity={m.popularity}
+                poster={m.poster_path}
+                release={m.release_date}
+              />
+            )
+          }) : searchInput && <p>No results found.</p>
+        }
       </div>
     </div>
   );
