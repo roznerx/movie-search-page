@@ -18,8 +18,11 @@ Made by **roznerx** (ignaciorosner@gmail.com)
 
 **NOTE:** I'm really happy with how it turned out, although there might be some stuff that needs refining; for example, the way the selected Task moves up when being dragged, and such
 
+**NOTE 2:** Noticed there was a blank space before the films were fetched, so I placed an skeleton component to render them for a couple seconds before my favorite films fetch!
+
 ## Screenshots:
 
+![imagen](https://github.com/user-attachments/assets/055f31d6-5f77-4a43-bbb1-c9b41a0c9e9e)
 ![imagen](https://github.com/user-attachments/assets/fbfbcfa3-a626-4378-8ac2-058cda72a02c)
 ![imagen](https://github.com/user-attachments/assets/11d354a3-4037-40b7-a240-1878659f6235)
 ![imagen](https://github.com/user-attachments/assets/db1cafc2-7298-4a80-9cd7-8a8272b2ef4b)
