@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Searchbar from "./components/Searchbar";
-import { getMovies } from "./api/movies";
+import { getMovies, getFavoriteMovies } from "./api/movies";
 import Movie from "./components/Movie";
 import ReactPaginate from 'react-paginate';
 import "./MovieSearchPage.css";
@@ -13,10 +13,16 @@ export default function MovieSearchPage() {
   const [page, setPages] = useState(1);
 
   useEffect(() => {
-    if (!searchInput) return;
-
-    async function fetchMovies() {
+    async function fetchData() {
       try {
+        if (!searchInput) {
+          const favorites = await getFavoriteMovies();
+          console.log(favorites.results)
+          setMovies(favorites.results);
+          setTotalPages(0);
+          return;
+        }
+
         const data = await getMovies(searchInput, page);
         setMovieData(data);
         setMovies(data.results);
@@ -24,9 +30,9 @@ export default function MovieSearchPage() {
       } catch (error) {
         console.error('Failed to fetch movies:', error.message);
       }
-    };
-
-    fetchMovies();
+    }
+    
+    fetchData();
   }, [searchInput, page]);
 
   useEffect(() => {
@@ -44,11 +50,12 @@ export default function MovieSearchPage() {
       </div>
       <div className="movies">
         {
-          movieData.results && movies.length > 0 ? 
+          movies.length > 0 ? 
           movies.map(m => {
             return (
               <Movie 
                 key={m.id}
+                id={m.id}
                 title={m.title}
                 plot={m.overview}
                 popularity={m.popularity}
@@ -60,6 +67,8 @@ export default function MovieSearchPage() {
         }
       </div>
       {
+        !searchInput ? 
+        <></> : 
         totalPages > 1 && (
           <ReactPaginate
             previousLabel={"←"}

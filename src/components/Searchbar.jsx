@@ -8,7 +8,7 @@ export default function Searchbar({ setSearchInput }) {
     <div className='searchbar-wrapper'>
       <input 
         className='search-input'
-        placeholder='Search for a movie here...'
+        placeholder='You are currently seeing my favorite movies! Search for yours here...'
         type="text" 
         value={input} 
         onChange={(e) => setInput(e.target.value)} />

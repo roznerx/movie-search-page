@@ -1,6 +1,6 @@
 import "./Movie.css";
 
-export default function Movie({ title, plot, popularity, poster, release }) {
+export default function Movie({ id, title, plot, popularity, poster, release }) {
   return (
     <div className="movie-card">
       {
@@ -40,6 +40,9 @@ export default function Movie({ title, plot, popularity, poster, release }) {
           plot && plot.length > 90 && (
             <button 
               className="read-more" 
+              onClick={
+                () => window.open(`https://www.themoviedb.org/movie/${id}`)
+              }
             >
               Read more
             </button>
@@ -48,4 +51,4 @@ export default function Movie({ title, plot, popularity, poster, release }) {
       </div>
     </div>
   );
-}
+};
