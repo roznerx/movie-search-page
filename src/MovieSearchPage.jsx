@@ -3,28 +3,29 @@ import Searchbar from "./components/Searchbar";
 import { getMovies, getFavoriteMovies } from "./api/movies";
 import Movie from "./components/Movie";
 import ReactPaginate from 'react-paginate';
+import MovieSkeleton from "./components/MovieSkeleton";
 import "./MovieSearchPage.css";
 
 export default function MovieSearchPage() {
   const [searchInput, setSearchInput] = useState("");
-  const [movieData, setMovieData] = useState([]);
   const [movies, setMovies] = useState([])
   const [totalPages, setTotalPages] = useState(null);
   const [page, setPages] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       try {
         if (!searchInput) {
+          setLoading(true);
           const favorites = await getFavoriteMovies();
-          console.log(favorites.results)
           setMovies(favorites.results);
           setTotalPages(0);
+          setLoading(false);
           return;
         }
 
         const data = await getMovies(searchInput, page);
-        setMovieData(data);
         setMovies(data.results);
         setTotalPages(data.total_pages);
       } catch (error) {
@@ -39,9 +40,6 @@ export default function MovieSearchPage() {
     setPages(1);
   }, [searchInput]);
 
-  console.log(movieData)
-  console.log("Movies found:", movies);
-
   return (
     <div>
       <div className="header">
@@ -50,6 +48,11 @@ export default function MovieSearchPage() {
       </div>
       <div className="movies">
         {
+          loading ? (
+            Array
+              .from({ length: 20 })
+              .map((_, index) => <MovieSkeleton key={index} />)
+          ) : 
           movies.length > 0 ? 
           movies.map(m => {
             return (
